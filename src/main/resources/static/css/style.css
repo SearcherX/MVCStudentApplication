@@ -1,0 +1,9 @@
+.nav-link {
+    color: black;
+    font-weight: 700;
+}
+
+.nav-link:hover {
+    background-color: black;
+    color: white;
+}

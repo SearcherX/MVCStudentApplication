@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<head th:replace="layout/layouts.html :: common_header(~{::title})">
     <title>Home Page</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
+<header th:insert="layout/layouts.html :: navs"></header>
+
 <div class="container-fluid text-center">
     <h1>Welcome to Students Application</h1>
-    <div class="row">
-        <a th:href="@{/students}">Manage students</a>
-        <a th:href="@{/groups}">Manage groups</a>
-    </div>
 </div>
 
 <footer class="footer mt-auto" th:insert="layout/layouts.html :: footer"></footer>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
+<head th:replace="layout/layouts.html :: common_header(~{::title})">
   <title>Add new group</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
+<header th:insert="layout/layouts.html :: navs"></header>
+
 <div class="container-fluid text-center">
   <h1>Add new group</h1>
   <form method="post" th:action="@{/groups/new}" th:object="${group}">
