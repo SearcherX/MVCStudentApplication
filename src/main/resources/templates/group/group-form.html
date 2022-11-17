@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add new group</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+  <h1>Add new group</h1>
+  <form method="post" th:action="@{/groups/new}" th:object="${group}">
+    <label>Group Name: </label>
+    <input type="text" th:field="*{groupName}" required minlength="1" maxlength="50"/>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a th:href="@{/groups}" class="btn btn-danger">Cancel</a>
+  </form>
+</div>
+
+<footer th:insert="layout/layouts.html :: footer"></footer>
+</body>
+</html>

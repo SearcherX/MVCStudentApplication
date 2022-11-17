@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <!-- сообщение -->
+    <div th:if="${message != null}" class="alert alert-success">
+        [[${message}]]
+    </div>
+    <!-- вывод списка студентов в виде таблицы + bootstrap -->
+    <table class="table table-bordered">  <!-- шапка таблицы -->
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Group Name</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="group: ${groupsList}">
+            <tr>
+                <td>[[${group.id}]]</td>
+                <td>[[${group.groupName}]]</td>
+                <td>
+                    <a th:href="@{'/groups/delete/' + ${group.id}}" class="btn btn-danger">
+                        Delete
+                    </a>
+                    <a th:href="@{'/groups/details/' + ${group.id}}" class="btn btn-primary">
+                        Details
+                    </a>
+                    <a th:href="@{'/groups/update/' + ${group.id}}" class="btn btn-primary">
+                        Update
+                    </a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+    <!-- ссылка на добавление нового студента -->
+    <a th:href="@{/groups/new}"> Add new Group </a>
+</div>
+<footer th:insert="layout/layouts.html :: footer"></footer>
+</body>
+</html>

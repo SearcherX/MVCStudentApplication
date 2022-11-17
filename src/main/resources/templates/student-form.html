@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new student</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <h1>Add new student</h1>
+    <!-- форма добавления студента -->
+    <form method="post" th:action="@{/students/new}" th:object="${student}">
+        <!-- поле имени -->
+        <label>First Name: </label>
+        <input type="text" th:field="*{firstName}" required minlength="1" maxlength="50"/>
+        <!-- поле фамилии -->
+        <label>Last Name:</label>
+        <input type="text" th:field="*{lastName}" required minlength="1" maxlength="50"/>
+        <!-- поле группы -->
+        <label>Group: </label>
+        <select th:field="*{group}">
+            <option th:value="${null}">NONE</option>
+            <th:block th:each="group: ${groupsList}">
+                <option th:value="${group.id}">
+                    [[${group.groupName}]]
+                </option>
+            </th:block>
+        </select>
+        <!-- кнопка сохранить -->
+        <button type="submit" class="btn btn-success">Save</button>
+        <!-- кнопка отмены -->
+        <a th:href="@{/students}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+
+<footer th:insert="layout/layouts.html :: footer"></footer>
+</body>
+</html>
