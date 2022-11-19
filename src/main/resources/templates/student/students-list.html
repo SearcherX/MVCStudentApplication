@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Students</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+    <div class="container text-center">
+        <!-- сообщение -->
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+        <h2>Students</h2>
+        <!-- вывод списка студентов в виде таблицы + bootstrap -->
+        <table class="table table-bordered">  <!-- шапка таблицы -->
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Group</th>
+                <th>Action</th>
+            </tr>
+            </thead>  <!-- тело таблицы -->
+            <tbody>    <!-- цикл -->
+            <th:block th:each="student: ${studentsList}">
+                <tr>
+                    <td>[[${student.id}]]</td>
+                    <td>[[${student.firstName}]]</td>
+                    <td>[[${student.lastName}]]</td>
+                    <td th:text="${student.group == null ? 'NONE' : student.group.groupName}"/>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Select
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a th:href="@{'/students/details/' + ${student.id}}" class="dropdown-item">
+                                        Details
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{'/students/update/' + ${student.id}}" class="dropdown-item">
+                                        Update
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{'/students/delete/' + ${student.id}}" class="dropdown-item">
+                                        Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <!-- ссылка на добавление нового студента -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-2">
+                <a th:href="@{/students/new}" class="btn btn-success"> Add student </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

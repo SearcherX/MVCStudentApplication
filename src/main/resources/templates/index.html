@@ -1,16 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layouts.html :: common_header(~{::title})">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
     <title>Home Page</title>
 </head>
-<body>
-<header th:insert="layout/layouts.html :: navs"></header>
+<body class="d-flex flex-column min-vh-100">
 
-<div class="container-fluid text-center">
-    <h1>Welcome to Students Application</h1>
-</div>
+<header th:replace="layout/layouts.html :: header"></header>
 
-<footer class="footer mt-auto" th:insert="layout/layouts.html :: footer"></footer>
+<main class="mb-auto mt-2">
+    <div class="container-fluid text-center">
+        <h1>Welcome to Students Application</h1>
+    </div>
+
+    <div class="row">
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>test</label>
+        <label>long test</label>
+    </div>
+
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
 
 </body>
 </html>

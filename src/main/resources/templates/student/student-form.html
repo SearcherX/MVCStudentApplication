@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Add new student</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+    <div class="container-fluid text-center">
+        <h1 th:text="${action == 'create' ? 'Add new student' : 'Manage student'}"></h1>
+        <!-- форма добавления студента -->
+        <div class="row justify-content-center">
+            <div class="col-2 bg-light">
+                <form method="post" th:action="@{/students/save}"
+                      th:object="${student}" class="row g-3">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="col-12">
+                        <label for="inputFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="inputFirstName"
+                               th:field="*{firstName}" required minlength="1" maxlength="50">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="inputLastName"
+                               th:field="*{lastName}" required minlength="1" maxlength="50">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputGroup" class="form-label">Group:</label>
+                        <select id="inputGroup" class="form-select" th:field="*{group}">
+                            <option th:value="${null}">NONE</option>
+                            <th:block th:each="group: ${groupsList}">
+                                <option th:value="${group.id}">
+                                    [[${group.groupName}]]
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a th:href="@{/students}" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+</body>
+</html>

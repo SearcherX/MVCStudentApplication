@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layouts.html :: common_header(~{::title})">
-  <title>Add new group</title>
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Add new group</title>
 </head>
-<body>
-<header th:insert="layout/layouts.html :: navs"></header>
+<body class="d-flex flex-column min-vh-100">
 
-<div class="container-fluid text-center">
-  <h1>Add new group</h1>
-  <form method="post" th:action="@{/groups/new}" th:object="${group}">
-    <label>Group Name: </label>
-    <input type="text" th:field="*{groupName}" required minlength="1" maxlength="50"/>
-    <button type="submit" class="btn btn-success">Save</button>
-    <a th:href="@{/groups}" class="btn btn-danger">Cancel</a>
-  </form>
-</div>
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+    <div class="container-fluid text-center">
+        <h1 th:text="${action == 'create' ? 'Add new group' : 'Manage group'}"></h1>
+        <div class="row justify-content-center">
+            <div class="col-2 bg-light">
+                <form method="post" th:action="@{/groups/save}"
+                      th:object="${group}" class="row g-3">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="col-12">
+                        <label for="inputGroupName" class="form-label">Group Name</label>
+                        <input type="text" class="form-control" id="inputGroupName"
+                               th:field="*{groupName}" required minlength="1" maxlength="50">
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a th:href="@{/groups}" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
 
 <footer th:insert="layout/layouts.html :: footer"></footer>
 </body>

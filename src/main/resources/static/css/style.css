@@ -1,6 +1,5 @@
-.nav-link {
-    color: black;
-    font-weight: 700;
+body {
+    overflow-x: hidden;
 }
 
 .nav-link:hover {

@@ -1,48 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layouts.html :: common_header(~{::title})">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
     <title>Groups</title>
 </head>
-<body>
-<header th:insert="layout/layouts.html :: navs"></header>
+<body class="d-flex flex-column min-vh-100">
 
-<div class="container-fluid text-center">
-    <!-- сообщение -->
-    <div th:if="${message != null}" class="alert alert-success">
-        [[${message}]]
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+    <div class="container text-center justify-content-center col-5">
+        <div class="row">
+            <!-- сообщение -->
+            <div th:if="${message != null}" class="alert alert-success">
+                [[${message}]]
+            </div>
+            <h2>Groups</h2>
+            <!-- вывод списка групп в виде таблицы + bootstrap -->
+            <table class="table table-bordered">  <!-- шапка таблицы -->
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Group Name</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="group: ${groupsList}">
+                    <tr>
+                        <td>[[${group.id}]]</td>
+                        <td>[[${group.groupName}]]</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a th:href="@{'/groups/delete/' + ${group.id}}" class="dropdown-item">
+                                            Delete
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{'/groups/update/' + ${group.id}}" class="dropdown-item">
+                                            Update
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <!-- ссылка на добавление новой группы -->
+            <div class="row d-flex justify-content-center">
+                <div class="col-2">
+                    <a th:href="@{/groups/new}" class="btn btn-success">Add Group</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- вывод списка студентов в виде таблицы + bootstrap -->
-    <table class="table table-bordered">  <!-- шапка таблицы -->
-        <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Group Name</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="group: ${groupsList}">
-            <tr>
-                <td>[[${group.id}]]</td>
-                <td>[[${group.groupName}]]</td>
-                <td>
-                    <a th:href="@{'/groups/delete/' + ${group.id}}" class="btn btn-danger">
-                        Delete
-                    </a>
-                    <a th:href="@{'/groups/details/' + ${group.id}}" class="btn btn-primary">
-                        Details
-                    </a>
-                    <a th:href="@{'/groups/update/' + ${group.id}}" class="btn btn-primary">
-                        Update
-                    </a>
-                </td>
-            </tr>
-        </th:block>
-        </tbody>
-    </table>
-    <!-- ссылка на добавление нового студента -->
-    <a th:href="@{/groups/new}"> Add new Group </a>
-</div>
-<footer th:insert="layout/layouts.html :: footer"></footer>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
 </body>
 </html>

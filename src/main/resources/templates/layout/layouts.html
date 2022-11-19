@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- фрагмент хеда -->
-<head th:fragment="common_header(title)">
+<head th:fragment="common_head(title)">
     <meta charset="UTF-8">
     <title th:replace="${title}">The awesome application</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-</head>>
+</head>
+>
 <body>
 
 <!-- фрагмент хедера -->
-<div th:fragment="navs">
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/students}">Students</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/groups}">Groups</a>
-        </li>
-    </ul>
-</div>
+<header th:fragment="header" class="sticky-top bg-secondary">
+    <div class="container fs-5 fw-bold">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link text-light" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" th:href="@{/students}">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" th:href="@{/groups}">Groups</a>
+            </li>
+        </ul>
+    </div>
+</header>
 <!-- фрагмент футера -->
-<div class="container-fluid text-center fixed-bottom text-bg-dark"
-     th:fragment="footer">
-    <h4>Created by A. Naidenov 2022 &copy;</h4>
-</div>
+<footer class="footer bg-secondary text-light sticky-bottom py-2" th:fragment="footer">
+    <div class="container-fluid text-center fs-5 fw-bold">
+        Created by A. Naidenov 2022 &copy;
+    </div>
+</footer>
 </body>
 </html>

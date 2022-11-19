@@ -20,6 +20,10 @@ public class GroupService {
         return (List<Group>)repository.findAll();
     }
 
+    public Group findById(int id) {
+        return repository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
     public Group saveGroup(Group group) {
         return repository.save(group);
     }

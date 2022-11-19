@@ -16,6 +16,10 @@ public class StudentService {
         return (List<Student>)repository.findAll();
     }
 
+    public Student findById(int id) {
+        return repository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
     // сохранить студента в БД
     public Student saveStudent(Student student) {
         return repository.save(student);

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Student details</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto mt-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card col-3">
+                <div class="card-header">
+                    <h4>Student Details</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Имя студента: [[${student.firstName}]] [[${student.lastName}]]
+                    </li>
+                    <li class="list-group-item">
+                        Группа:
+                        <span th:text="${student.group == null ? 'NONE' : student.group.groupName}"></span>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a th:href="@{/students}" class="card-link">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+</body>
+</html>
