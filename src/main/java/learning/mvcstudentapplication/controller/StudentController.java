@@ -1,9 +1,13 @@
 package learning.mvcstudentapplication.controller;
 
+import learning.mvcstudentapplication.db.entity.Assessment;
 import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Student;
+import learning.mvcstudentapplication.db.entity.Subject;
+import learning.mvcstudentapplication.service.AssessmentService;
 import learning.mvcstudentapplication.service.GroupService;
 import learning.mvcstudentapplication.service.StudentService;
+import learning.mvcstudentapplication.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +19,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/students")
 public class StudentController {
-    private final StudentService studentService;
+    @Autowired
+    public StudentService studentService;
     @Autowired
     public GroupService groupService;
 
     @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    public AssessmentService assessmentService;
+
+    @Autowired
+    public SubjectService subjectService;
 
     @GetMapping("")
     public String showStudentsList(Model model) {
@@ -35,6 +41,38 @@ public class StudentController {
     public String showDetailsCard(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("student", studentService.findById(id));
         return "student/student-info";
+    }
+
+    @GetMapping("/assessments/{id}")
+    public String showAssessmentList(Model model, @PathVariable("id") Integer id) {
+        System.out.println("test");
+        List<Assessment> assessmentList = assessmentService.listByStudentId(id);
+        model.addAttribute("assessmentList", assessmentList);
+        model.addAttribute("student", studentService.findById(id));
+        return "assessment/assessments-list";
+    }
+
+    @GetMapping("/assessments/{id}/new")
+    public String showAssessmentForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("action", "create");
+        model.addAttribute("assessment", new Assessment());
+        model.addAttribute("studentId", id);
+        model.addAttribute("student", studentService.findById(id));
+        List<Subject> subjects = subjectService.listAll();  // список всех групп
+        model.addAttribute("subjectsList", subjects);
+        return "assessment/assessment-form";
+    }
+
+    @PostMapping("/assessments/{id}/save")
+    public String saveAssessment(@ModelAttribute("assessment") Assessment assessment, RedirectAttributes ra) {
+        // 1. сохраняем новую оценку в БД
+        Assessment saved = assessmentService.save(assessment);
+        // 2. добавить сообщение о том, что оценка добавлена
+        ra.addFlashAttribute("message",
+                "Assessment " + saved.getAssessmentValue() + " on subject " +
+                        saved.getSubject() + " saved successfully");
+        // 3. выполнить перенаправление
+        return "redirect:/students/assessments/" + assessment.getStudent().getId();
     }
 
     // обработчик на получение формы для добавления студента

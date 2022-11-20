@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Add new assessment</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+    <div class="container-fluid text-center">
+        <h1 th:text="${action == 'create' ? 'Add new assessment' : 'Manage assessment'}"></h1>
+        <!-- форма добавления оценки -->
+        <div class="row justify-content-center">
+            <div class="col-2 bg-light">
+                <form method="post" th:action="@{'/students/assessments/' + ${studentId} + '/save'}"
+                      th:object="${assessment}" class="row g-3">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="col-12">
+                        <label for="inputAssessment" class="form-label">Assessment</label>
+                        <input type="text" class="form-control" id="inputAssessment"
+                               th:field="*{assessmentValue}" required minlength="1" maxlength="50">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="inputDate"
+                               th:field="*{date}" required minlength="1" maxlength="50">
+                    </div>
+<!--                    <div class="col-12" hidden>-->
+<!--                        <label for="selectStudent" class="form-label">Student:</label>-->
+<!--                        <select id="selectStudent" class="form-select" th:field="*{student}" th:value="${studentId}">-->
+<!--                            <option th:value="${studentId}">-->
+<!--                                Студент-->
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+                    <div class="col-12">
+                        <label for="selectSubject" class="form-label">Subject:</label>
+                        <select id="selectSubject" class="form-select" th:field="*{subject}">
+                            <th:block th:each="subject: ${subjectsList}">
+                                <option th:value="${subject.id}">
+                                    [[${subject.subjectName}]]
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a th:href="@{'/students/assessments/' + ${studentId}}" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+</body>
+</html>

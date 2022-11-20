@@ -1,6 +1,7 @@
 package learning.mvcstudentapplication.db.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="student_t")
@@ -18,6 +19,17 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = true)
     private Group group;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
+    private Set<Assessment> assessments;
+
+    public Set<Assessment> getAssessments() {
+        return assessments;
+    }
+
+    public void setAssessments(Set<Assessment> assessments) {
+        this.assessments = assessments;
+    }
 
     public Group getGroup() {
         return group;
@@ -53,6 +65,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return id + " - " + firstName + " - " + lastName;
+        return firstName + " " + lastName;
     }
 }
