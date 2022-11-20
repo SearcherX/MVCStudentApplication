@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+  <title>Students</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+  <div class="container text-center justify-content-center col-3">
+    <h2>Subjects</h2>
+    <!-- вывод списка групп в виде таблицы + bootstrap -->
+    <table class="table table-bordered">  <!-- шапка таблицы -->
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Subject Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="subject: ${subjectsList}">
+        <tr>
+          <td>[[${subject.id}]]</td>
+          <td>[[${subject.subjectName}]]</td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+</body>
+</html>

@@ -11,25 +11,25 @@ import java.util.Optional;
 @Service
 public class StudentService {
     @Autowired
-    private StudentsRepository repository;
+    private StudentsRepository studentsRepository;
     public List<Student> listAll() {
-        return (List<Student>)repository.findAll();
+        return (List<Student>) studentsRepository.findAll();
     }
 
     public Student findById(int id) {
-        return repository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return studentsRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     // сохранить студента в БД
     public Student saveStudent(Student student) {
-        return repository.save(student);
+        return studentsRepository.save(student);
     }
 
     // удаления студента по id
     public void deleteStudentById(Integer id) {
         // 1. найти студента для удаления
-        Optional<Student> deleted = repository.findById(id);
+        Optional<Student> deleted = studentsRepository.findById(id);
         // 2. если такой студент есть, то удалить его
-        deleted.ifPresent(student -> repository.delete(student));
+        deleted.ifPresent(student -> studentsRepository.delete(student));
     }
 }

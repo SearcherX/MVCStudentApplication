@@ -10,31 +10,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.Id;
 import java.util.List;
 
 @Controller
 @RequestMapping("/students")
 public class StudentController {
-    private final StudentService service;
+    private final StudentService studentService;
     @Autowired
     public GroupService groupService;
 
     @Autowired
-    public StudentController(StudentService service) {
-        this.service = service;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping("")
     public String showStudentsList(Model model) {
-        List<Student> studentsList = service.listAll();
+        List<Student> studentsList = studentService.listAll();
         model.addAttribute("studentsList", studentsList);
         return "student/students-list";
     }
 
     @GetMapping("/details/{id}")
     public String showDetailsCard(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("student", service.findById(id));
+        model.addAttribute("student", studentService.findById(id));
         return "student/student-info";
     }
 
@@ -52,7 +51,7 @@ public class StudentController {
     @PostMapping("/save")
     public String saveStudent(@ModelAttribute("student") Student student, RedirectAttributes ra) {
         // 1. сохраняем нового студента в БД
-        Student saved = service.saveStudent(student);
+        Student saved = studentService.saveStudent(student);
         // 2. добавить сообщение о том, что студент добавлен
         ra.addFlashAttribute("message",
                 "Student " + saved + " saved successfully");
@@ -63,8 +62,8 @@ public class StudentController {
     @GetMapping("/update/{id}")
     public String showUpdateStudentForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("action", "update");
-        model.addAttribute("student", service.findById(id));
-        System.out.println(service.findById(id));
+        model.addAttribute("student", studentService.findById(id));
+        System.out.println(studentService.findById(id));
         List<Group> groups = groupService.listAllGroups();  // список всех групп
         model.addAttribute("groupsList", groups);
         return "student/student-form";
@@ -73,7 +72,7 @@ public class StudentController {
     // обработчик для удаления студент
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") Integer id, RedirectAttributes ra) {
-        service.deleteStudentById(id);
+        studentService.deleteStudentById(id);
         ra.addFlashAttribute("message", "Student deleted");
         return "redirect:/students";
     }
