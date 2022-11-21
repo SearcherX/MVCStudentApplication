@@ -40,6 +40,7 @@ public class StudentController {
     @GetMapping("/details/{id}")
     public String showDetailsCard(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("student", studentService.findById(id));
+        model.addAttribute("assessmentsMap", assessmentService.getStudentAssessmentMap(id));
         return "student/student-info";
     }
 
@@ -73,6 +74,13 @@ public class StudentController {
                         saved.getSubject() + " saved successfully");
         // 3. выполнить перенаправление
         return "redirect:/students/assessments/" + assessment.getStudent().getId();
+    }
+
+    @GetMapping("/assessments/{id}/delete/{id2}")
+    public String deleteAssessment(@PathVariable("id") Integer id, @PathVariable("id2") Integer id2, RedirectAttributes ra) {
+        assessmentService.delete(id2);
+        ra.addFlashAttribute("message", "Assessment deleted");
+        return "redirect:/students/assessments/{id}";
     }
 
     // обработчик на получение формы для добавления студента

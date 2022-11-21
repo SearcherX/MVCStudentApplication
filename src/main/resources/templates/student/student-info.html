@@ -23,6 +23,22 @@
                         <span th:text="${student.group == null ? 'NONE' : student.group.groupName}"></span>
                     </li>
                 </ul>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Assessments</th>
+                    </tr>
+                    </thead>
+                    <tbody>    <!-- цикл -->
+                    <th:block th:each="assessment: ${assessmentsMap}">
+                        <tr>
+                            <td>[[${assessment.key}]]</td>
+                            <td>[[${assessment.value}]]</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
                 <div class="card-body">
                     <a th:href="@{/students}" class="card-link">Back</a>
                 </div>

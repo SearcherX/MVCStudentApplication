@@ -31,7 +31,8 @@
           <tr>
             <td>[[${assessment.id}]]</td>
             <td>[[${assessment.assessmentValue}]]</td>
-            <td>[[${assessment.date}]]</td>
+<!--            <td>[[${assessment.date}]]</td>-->
+            <td>[[${#dates.format(assessment.date, 'dd.MM.yyyy')}]]</td>
             <td>[[${assessment.subject.subjectName}]]</td>
             <td>
               <div class="dropdown">
@@ -41,13 +42,8 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <a th:href="@{'/assessments/' + ${student.id} + '/delete/' + ${assessment.id}}" class="dropdown-item">
+                    <a th:href="@{'/students/assessments/' + ${student.id} + '/delete/' + ${assessment.id}}" class="dropdown-item">
                       Delete
-                    </a>
-                  </li>
-                  <li>
-                    <a th:href="@{'/assessments/' + ${student.id} + '/update/' + ${assessment.id}}" class="dropdown-item">
-                      Update
                     </a>
                   </li>
                 </ul>
