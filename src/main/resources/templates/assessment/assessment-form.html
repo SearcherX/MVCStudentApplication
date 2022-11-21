@@ -29,14 +29,16 @@
                     <input type="hidden" name="student" th:value="${studentId}">
                     <div class="col-12">
                         <label for="selectSubject" class="form-label">Subject:</label>
-                        <select id="selectSubject" class="form-select" th:field="*{subject}">
-                            <th:block th:each="subject: ${subjectsList}">
-                                <option th:value="${subject.id}">
-                                    [[${subject.subjectName}]]
+                        <select id="selectSubject" class="form-select" name="subject">
+                            <th:block th:each="subjectChoice: ${subjectsList}">
+                                <option th:value="${subjectChoice.id}"
+                                        th:selected="(${subjectChoice.id} == *{subject?.id})" >
+                                    [[${subjectChoice.subjectName}]]
                                 </option>
                             </th:block>
                         </select>
                     </div>
+                    <input type="hidden" name="action" th:value="${action}">
                     <div class="col-12">
                         <button type="submit" class="btn btn-success">Save</button>
                         <a th:href="@{'/students/assessments/' + ${studentId}}" class="btn btn-danger">Cancel</a>

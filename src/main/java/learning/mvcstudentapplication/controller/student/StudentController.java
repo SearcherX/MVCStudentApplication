@@ -1,4 +1,4 @@
-package learning.mvcstudentapplication.controller;
+package learning.mvcstudentapplication.controller.student;
 
 import learning.mvcstudentapplication.controller.filter.AssessmentFilter;
 import learning.mvcstudentapplication.controller.filter.StudentNameFilter;
@@ -30,9 +30,6 @@ public class StudentController {
     public AssessmentService assessmentService;
 
     @Autowired
-    public SubjectService subjectService;
-
-    @Autowired
     private StudentNameFilter containsFilter;   // объект фильтра
 
     @GetMapping("")
@@ -59,44 +56,6 @@ public class StudentController {
         model.addAttribute("avgMap", filter.getAvgMap());
         model.addAttribute("avgAll", filter.getAvgAll());
         return "student/student-info";
-    }
-
-    @GetMapping("/assessments/{id}")
-    public String showAssessmentList(Model model, @PathVariable("id") Integer id) {
-        System.out.println("test");
-        List<Assessment> assessmentList = assessmentService.listByStudentId(id);
-        model.addAttribute("assessmentList", assessmentList);
-        model.addAttribute("student", studentService.findById(id));
-        return "assessment/assessments-list";
-    }
-
-    @GetMapping("/assessments/{id}/new")
-    public String showAssessmentForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("action", "create");
-        model.addAttribute("assessment", new Assessment());
-        model.addAttribute("studentId", id);
-        List<Subject> subjects = subjectService.listAll();  // список всех групп
-        model.addAttribute("subjectsList", subjects);
-        return "assessment/assessment-form";
-    }
-
-    @PostMapping("/assessments/{id}/save")
-    public String saveAssessment(@ModelAttribute("assessment") Assessment assessment, RedirectAttributes ra) {
-        // 1. сохраняем новую оценку в БД
-        Assessment saved = assessmentService.save(assessment);
-        // 2. добавить сообщение о том, что оценка добавлена
-        ra.addFlashAttribute("message",
-                "Assessment " + saved.getAssessmentValue() + " on subject " +
-                        saved.getSubject() + " saved successfully");
-        // 3. выполнить перенаправление
-        return "redirect:/students/assessments/" + assessment.getStudent().getId();
-    }
-
-    @GetMapping("/assessments/{id}/delete/{id2}")
-    public String deleteAssessment(@PathVariable("id") Integer id, @PathVariable("id2") Integer id2, RedirectAttributes ra) {
-        assessmentService.delete(id2);
-        ra.addFlashAttribute("message", "Assessment deleted");
-        return "redirect:/students/assessments/{id}";
     }
 
     // обработчик на получение формы для добавления студента
