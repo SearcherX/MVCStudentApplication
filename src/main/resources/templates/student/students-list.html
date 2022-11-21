@@ -14,12 +14,12 @@
             [[${message}]]
         </div>
         <h2>Students</h2>
-        <!-- фильтр -->
         <div class="row mb-2">
             <!-- ссылка на добавление нового студента -->
             <div class="col-6 d-flex justify-content-start">
                 <a th:href="@{/students/new}" class="btn btn-success"> Add student </a>
             </div>
+            <!-- фильтр -->
             <div class="col-6 d-flex justify-content-end">
                 <form method="post" th:action="@{/students}" th:object="${containsFilter}">
                     <label>
