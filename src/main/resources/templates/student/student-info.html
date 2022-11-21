@@ -16,10 +16,10 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        Имя студента: [[${student.firstName}]] [[${student.lastName}]]
+                        Full name: [[${student.firstName}]] [[${student.lastName}]]
                     </li>
                     <li class="list-group-item">
-                        Группа:
+                        Group:
                         <span th:text="${student.group == null ? 'NONE' : student.group.groupName}"></span>
                     </li>
                 </ul>
@@ -28,15 +28,22 @@
                     <tr>
                         <th>Subject</th>
                         <th>Assessments</th>
+                        <th>AVG</th>
                     </tr>
                     </thead>
                     <tbody>    <!-- цикл -->
                     <th:block th:each="assessment: ${assessmentsMap}">
                         <tr>
                             <td>[[${assessment.key}]]</td>
-                            <td>[[${assessment.value}]]</td>
+                            <td th:text="${T(learning.mvcstudentapplication.controller.filter.AssessmentFilter).listToString(assessment.value)}"></td>
+                            <td>[[${avgMap.get(assessment.key)}]]</td>
                         </tr>
                     </th:block>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td>[[${avgAll}]]</td>
+                    </tr>
                     </tbody>
                 </table>
                 <div class="card-body">

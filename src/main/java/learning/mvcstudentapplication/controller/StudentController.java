@@ -1,5 +1,6 @@
 package learning.mvcstudentapplication.controller;
 
+import learning.mvcstudentapplication.controller.filter.AssessmentFilter;
 import learning.mvcstudentapplication.db.entity.Assessment;
 import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Student;
@@ -40,7 +41,10 @@ public class StudentController {
     @GetMapping("/details/{id}")
     public String showDetailsCard(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("student", studentService.findById(id));
-        model.addAttribute("assessmentsMap", assessmentService.getStudentAssessmentMap(id));
+        AssessmentFilter filter = new AssessmentFilter(assessmentService.listByStudentId(id));
+        model.addAttribute("assessmentsMap", filter.getAssessmentMap());
+        model.addAttribute("avgMap", filter.getAvgMap());
+        model.addAttribute("avgAll", filter.getAvgAll());
         return "student/student-info";
     }
 

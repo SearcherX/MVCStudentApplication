@@ -1,5 +1,7 @@
 package learning.mvcstudentapplication.db.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,11 +21,13 @@ public class Assessment {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = true)
+    @JoinColumn(name = "student_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = true)
+    @JoinColumn(name = "subject_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Subject subject;
 
     public Integer getId() {
@@ -45,10 +49,6 @@ public class Assessment {
     public Date getDate() {
         return date;
     }
-
-//    public void setDate(String date) {
-//        this.date = LocalDate.parse(date, FORMATTER);
-//    }
 
     public void setDate(Date date) {
         this.date = date;

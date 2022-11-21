@@ -18,6 +18,7 @@ public class AssessmentService {
         return (List<Assessment>)assessmentRepository.findAll();
     }
 
+    //вернуть список оценок для определенного студента
     public List<Assessment> listByStudentId(int id) {
         return ((List<Assessment>)assessmentRepository.findAll())
                 .stream()
@@ -40,16 +41,4 @@ public class AssessmentService {
         deleted.ifPresent(assessment -> assessmentRepository.delete(assessment));
     }
 
-    public Map<String, ArrayList<Integer>> getStudentAssessmentMap(int id) {
-        List<Assessment> records = listByStudentId(id);
-        Map<String, ArrayList<Integer>> assessmentMap = new TreeMap<>();
-
-        for (Assessment record: records) {
-            if (!assessmentMap.containsKey(record.getSubject().getSubjectName()))
-                assessmentMap.put(record.getSubject().getSubjectName(), new ArrayList<>());
-            assessmentMap.get(record.getSubject().getSubjectName()).add(record.getAssessmentValue());
-        }
-
-        return assessmentMap;
-    }
 }
