@@ -1,6 +1,7 @@
 package learning.mvcstudentapplication.controller;
 
 import learning.mvcstudentapplication.controller.filter.AssessmentFilter;
+import learning.mvcstudentapplication.controller.filter.StudentNameFilter;
 import learning.mvcstudentapplication.db.entity.Assessment;
 import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Student;
@@ -31,10 +32,22 @@ public class StudentController {
     @Autowired
     public SubjectService subjectService;
 
+    @Autowired
+    private StudentNameFilter containsFilter;   // объект фильтра
+
     @GetMapping("")
     public String showStudentsList(Model model) {
         List<Student> studentsList = studentService.listAll();
         model.addAttribute("studentsList", studentsList);
+        model.addAttribute("containsFilter", containsFilter);
+        return "student/students-list";
+    }
+
+    @PostMapping("")
+    public String showFilteredStudents(StudentNameFilter filter, Model model) {
+        List<Student> studentList = filter.getFilteredStudents(studentService);
+        model.addAttribute("studentsList", studentList);
+        model.addAttribute("containsFilter", filter);
         return "student/students-list";
     }
 
@@ -62,7 +75,6 @@ public class StudentController {
         model.addAttribute("action", "create");
         model.addAttribute("assessment", new Assessment());
         model.addAttribute("studentId", id);
-        model.addAttribute("student", studentService.findById(id));
         List<Subject> subjects = subjectService.listAll();  // список всех групп
         model.addAttribute("subjectsList", subjects);
         return "assessment/assessment-form";

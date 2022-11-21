@@ -32,4 +32,15 @@ public class StudentService {
         // 2. если такой студент есть, то удалить его
         deleted.ifPresent(student -> studentsRepository.delete(student));
     }
+
+    // получения студентов по строке
+    public List<Student> findByContains(String match) {
+        if (match == null || match.equals(""))
+            return (List<Student>)studentsRepository.findAll();
+        return ((List<Student>)studentsRepository.findAll())
+                .stream()
+                .filter(s -> s.getFirstName().toLowerCase().contains(match.toLowerCase()) ||
+                        s.getLastName().toLowerCase().contains(match.toLowerCase()))
+                .toList();
+    }
 }
