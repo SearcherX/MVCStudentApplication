@@ -29,10 +29,9 @@
                     <input type="hidden" name="student" th:value="${studentId}">
                     <div class="col-12">
                         <label for="selectSubject" class="form-label">Subject:</label>
-                        <select id="selectSubject" class="form-select" name="subject">
+                        <select id="selectSubject" class="form-select" th:field="*{subject}">
                             <th:block th:each="subjectChoice: ${subjectsList}">
-                                <option th:value="${subjectChoice.id}"
-                                        th:selected="(${subjectChoice.id} == *{subject?.id})" >
+                                <option th:value="${subjectChoice.id}">
                                     [[${subjectChoice.subjectName}]]
                                 </option>
                             </th:block>
