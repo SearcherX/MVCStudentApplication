@@ -67,10 +67,14 @@ public class AssessmentFilter {
 
     //метод преобразования список Integer в строку
     public static String listToString(List<Integer> values) {
+        if (values.size() == 0)
+            return "";
+
         StringBuilder str = new StringBuilder();
         for (Integer val: values) {
             str.append(val).append(", ");
         }
+
         str.delete(str.length() - 2, str.length() - 1);
         return str.toString();
     }
