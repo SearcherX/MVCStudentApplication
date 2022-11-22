@@ -1,15 +1,11 @@
 package learning.mvcstudentapplication.controller.student;
 
 import learning.mvcstudentapplication.controller.filter.AssessmentFilter;
-import learning.mvcstudentapplication.controller.filter.StudentNameFilter;
-import learning.mvcstudentapplication.db.entity.Assessment;
 import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Student;
-import learning.mvcstudentapplication.db.entity.Subject;
 import learning.mvcstudentapplication.service.AssessmentService;
 import learning.mvcstudentapplication.service.GroupService;
 import learning.mvcstudentapplication.service.StudentService;
-import learning.mvcstudentapplication.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,22 +25,17 @@ public class StudentController {
     @Autowired
     public AssessmentService assessmentService;
 
-    @Autowired
-    private StudentNameFilter containsFilter;   // объект фильтра
-
     @GetMapping("")
-    public String showStudentsList(Model model) {
-        List<Student> studentsList = studentService.listAll();
+    public String showStudentsList(@RequestParam(required = false, defaultValue = "") String containsFilter, Model model) {
+        List<Student> studentsList;
+
+        if (containsFilter != null && !containsFilter.isEmpty())
+            studentsList = studentService.findByContains(containsFilter);
+        else
+            studentsList = studentService.listAll();
+
         model.addAttribute("studentsList", studentsList);
         model.addAttribute("containsFilter", containsFilter);
-        return "student/students-list";
-    }
-
-    @PostMapping("")
-    public String showFilteredStudents(StudentNameFilter filter, Model model) {
-        List<Student> studentList = filter.getFilteredStudents(studentService);
-        model.addAttribute("studentsList", studentList);
-        model.addAttribute("containsFilter", filter);
         return "student/students-list";
     }
 

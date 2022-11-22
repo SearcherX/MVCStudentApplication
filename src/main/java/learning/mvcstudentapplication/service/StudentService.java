@@ -2,6 +2,7 @@ package learning.mvcstudentapplication.service;
 
 import learning.mvcstudentapplication.db.entity.Student;
 import learning.mvcstudentapplication.db.repository.StudentsRepository;
+import org.hibernate.annotations.NamedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +34,8 @@ public class StudentService {
         deleted.ifPresent(student -> studentsRepository.delete(student));
     }
 
-    // получения студентов по строке
     public List<Student> findByContains(String match) {
-        if (match == null || match.equals(""))
-            return (List<Student>)studentsRepository.findAll();
-        return ((List<Student>)studentsRepository.findAll())
-                .stream()
-                .filter(s -> s.getFirstName().toLowerCase().contains(match.toLowerCase()) ||
-                        s.getLastName().toLowerCase().contains(match.toLowerCase()))
-                .toList();
+        return studentsRepository.getFilteredStudents(match);
     }
+
 }
