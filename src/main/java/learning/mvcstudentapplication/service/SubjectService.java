@@ -15,4 +15,9 @@ public class SubjectService {
     public List<Subject> listAll() {
         return (List<Subject>)subjectRepository.findAll();
     }
+
+    //фильтр
+    public List<Subject> findByContains(String match) {
+        return subjectRepository.getFilteredSubjects(match);
+    }
 }

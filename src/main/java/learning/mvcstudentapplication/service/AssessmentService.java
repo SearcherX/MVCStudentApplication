@@ -1,8 +1,6 @@
 package learning.mvcstudentapplication.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import learning.mvcstudentapplication.db.entity.Assessment;
-import learning.mvcstudentapplication.db.entity.Student;
 import learning.mvcstudentapplication.db.repository.AssessmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +33,9 @@ public class AssessmentService {
     }
 
     public void delete(Integer id) {
-        // 1. найти студента для удаления
+        // 1. найти оценку для удаления
         Optional<Assessment> deleted = assessmentRepository.findById(id);
-        // 2. если такой студент есть, то удалить его
+        // 2. если такая оценка есть, то удалить её
         deleted.ifPresent(assessment -> assessmentRepository.delete(assessment));
     }
 

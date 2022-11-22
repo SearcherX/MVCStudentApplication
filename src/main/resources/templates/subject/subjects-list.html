@@ -10,8 +10,19 @@
 <main class="mb-auto">
   <div class="container text-center justify-content-center col-3">
     <h2>Subjects</h2>
-    <!-- вывод списка групп в виде таблицы + bootstrap -->
-    <table class="table table-bordered">  <!-- шапка таблицы -->
+    <div class="row mb-2">
+      <!-- фильтр -->
+      <div class="col-12 d-flex justify-content-end">
+        <form method="get" th:action="@{/subjects}">
+          <label>
+            <input type="text" class="form-control" name="containsFilter" th:value="${containsFilter}"/>
+          </label>
+          <button class="btn btn-success">Find</button>
+        </form>
+      </div>
+    </div>
+    <!-- вывод списка предметов в виде таблицы + bootstrap -->
+    <table class="table table-bordered bg-light">  <!-- шапка таблицы -->
       <thead class="table-dark">
       <tr>
         <th>ID</th>

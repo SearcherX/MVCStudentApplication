@@ -9,57 +9,64 @@
 
 <main class="mb-auto">
     <div class="container text-center justify-content-center col-5">
-        <div class="row">
-            <!-- сообщение -->
-            <div th:if="${message != null}" class="alert alert-success">
-                [[${message}]]
-            </div>
-            <h2>Groups</h2>
-            <!-- вывод списка групп в виде таблицы + bootstrap -->
-            <table class="table table-bordered">  <!-- шапка таблицы -->
-                <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Group Name</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="group: ${groupsList}">
-                    <tr>
-                        <td>[[${group.id}]]</td>
-                        <td>[[${group.groupName}]]</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    Select
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a th:href="@{'/groups/delete/' + ${group.id}}" class="dropdown-item">
-                                            Delete
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a th:href="@{'/groups/update/' + ${group.id}}" class="dropdown-item">
-                                            Update
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
+        <!-- сообщение -->
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+        <h2>Groups</h2>
+        <div class="row mb-2">
             <!-- ссылка на добавление новой группы -->
-            <div class="row d-flex justify-content-center">
-                <div class="col-2">
-                    <a th:href="@{/groups/new}" class="btn btn-success">Add Group</a>
-                </div>
+            <div class="col-6 d-flex justify-content-start">
+                <a th:href="@{/groups/new}" class="btn btn-success">Add group</a>
+            </div>
+            <!-- фильтр -->
+            <div class="col-6 d-flex justify-content-end">
+                <form method="get" th:action="@{/groups}">
+                    <label>
+                        <input type="text" class="form-control" name="containsFilter" th:value="${containsFilter}"/>
+                    </label>
+                    <button class="btn btn-success">Find</button>
+                </form>
             </div>
         </div>
+        <!-- вывод списка групп в виде таблицы + bootstrap -->
+        <table class="table table-bordered bg-light">  <!-- шапка таблицы -->
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Group Name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="group: ${groupsList}">
+                <tr>
+                    <td>[[${group.id}]]</td>
+                    <td>[[${group.groupName}]]</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Select
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a th:href="@{'/groups/delete/' + ${group.id}}" class="dropdown-item">
+                                        Delete
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{'/groups/update/' + ${group.id}}" class="dropdown-item">
+                                        Update
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
     </div>
 </main>
 

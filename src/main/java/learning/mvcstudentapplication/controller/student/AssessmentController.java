@@ -1,10 +1,8 @@
 package learning.mvcstudentapplication.controller.student;
 
 import learning.mvcstudentapplication.db.entity.Assessment;
-import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Subject;
 import learning.mvcstudentapplication.service.AssessmentService;
-import learning.mvcstudentapplication.service.GroupService;
 import learning.mvcstudentapplication.service.StudentService;
 import learning.mvcstudentapplication.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,7 @@ public class AssessmentController {
     @Autowired
     public SubjectService subjectService;
 
+    //обработчик на получение списка оценок
     @GetMapping("")
     public String showAssessmentList(Model model, @PathVariable("id") Integer id) {
         System.out.println("test");
@@ -36,6 +35,7 @@ public class AssessmentController {
         return "assessment/assessments-list";
     }
 
+    // обработчик на получение формы для добавления оценки
     @GetMapping("/new")
     public String showAssessmentForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("action", "create");
@@ -46,12 +46,13 @@ public class AssessmentController {
         return "assessment/assessment-form";
     }
 
+    // обработчик для сохранения данных об оценке
     @PostMapping("/save")
     public String saveAssessment(@ModelAttribute("assessment") Assessment assessment, RedirectAttributes ra,
                                  @RequestParam String action) {
         // 1. сохраняем новую оценку в БД
         Assessment saved = assessmentService.save(assessment);
-        // 2. добавить сообщение о том, что оценка добавлена
+        // 2. добавить сообщение о том, что оценка сохранена
         ra.addFlashAttribute("message",
                 "Assessment " + saved.getAssessmentValue() + " on subject " +
                         saved.getSubject() + " " + action + "d successfully");
@@ -59,6 +60,7 @@ public class AssessmentController {
         return "redirect:/students/assessments/" + assessment.getStudent().getId();
     }
 
+    //обработчик на получение формы для обновления оценки
     @GetMapping("/update/{id2}")
     public String showUpdateAssessmentForm(@PathVariable("id") Integer id, @PathVariable("id2") Integer id2, Model model) {
         model.addAttribute("action", "update");
@@ -69,6 +71,7 @@ public class AssessmentController {
         return "assessment/assessment-form";
     }
 
+    // обработчик для удаления оценки
     @GetMapping("/delete/{id2}")
     public String deleteAssessment(@PathVariable("id2") Integer id2, RedirectAttributes ra) {
         assessmentService.delete(id2);

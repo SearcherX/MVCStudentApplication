@@ -20,7 +20,7 @@
                         <input type="text" class="form-control" id="inputGroupName"
                                th:field="*{groupName}" required minlength="1" maxlength="50">
                     </div>
-
+                    <input type="hidden" name="action" th:value="${action}">
                     <div class="col-12">
                         <button type="submit" class="btn btn-success">Save</button>
                         <a th:href="@{/groups}" class="btn btn-danger">Cancel</a>

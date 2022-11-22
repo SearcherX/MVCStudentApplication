@@ -1,13 +1,14 @@
 package learning.mvcstudentapplication.controller.filter;
 
 import learning.mvcstudentapplication.db.entity.Assessment;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Service
 public class AssessmentFilter {
     //словарь из предмета и списка оценок
     private final Map<String, ArrayList<Integer>> assessmentMap = new TreeMap<>();
@@ -46,13 +47,15 @@ public class AssessmentFilter {
                 avg += assessmentValue;
             }
             avg /= pair.getValue().size();
-            avgMap.put(pair.getKey(), round(avg, 2));
-            avgAll += avg;
+            avgMap.put(pair.getKey(), round(avg, 2)); //запомнить в словарь округленный средний балл
+
+            avgAll += avg; //вести подсчет общего среднего балла
         }
-        avgAll = round(avgAll / avgMap.size(), 2);
+        avgAll = round(avgAll / avgMap.size(), 2); //закончить подсчет общего среднего балла и округлить
 
     }
 
+    //метод округления
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
@@ -62,6 +65,7 @@ public class AssessmentFilter {
         return (double) tmp / factor;
     }
 
+    //метод преобразования список Integer в строку
     public static String listToString(List<Integer> values) {
         StringBuilder str = new StringBuilder();
         for (Integer val: values) {

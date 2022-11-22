@@ -27,9 +27,14 @@ public class GroupService {
     }
 
     public void deleteGroupById(Integer id) {
-        // 1. найти студента для удаления
+        // 1. найти группу для удаления
         Optional<Group> deleted = groupRepository.findById(id);
-        // 2. если такой студент есть, то удалить его
+        // 2. если такая группа есть, то удалить её
         deleted.ifPresent(group -> groupRepository.delete(group));
+    }
+
+    //фильтр групп
+    public List<Group> findByContains(String match) {
+        return groupRepository.getFilteredGroups(match);
     }
 }

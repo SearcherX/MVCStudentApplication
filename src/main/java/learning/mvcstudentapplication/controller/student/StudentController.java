@@ -25,6 +25,7 @@ public class StudentController {
     @Autowired
     public AssessmentService assessmentService;
 
+    //обработчик на получение списка студентов, учитывая фильтр
     @GetMapping("")
     public String showStudentsList(@RequestParam(required = false, defaultValue = "") String containsFilter, Model model) {
         List<Student> studentsList;
@@ -39,6 +40,7 @@ public class StudentController {
         return "student/students-list";
     }
 
+    //обработчик на получение карточки с подробной информации о студенте
     @GetMapping("/details/{id}")
     public String showDetailsCard(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("student", studentService.findById(id));
@@ -59,18 +61,20 @@ public class StudentController {
         return "student/student-form";
     }
 
-    // обработчик для сохранения данных о пользователе
+    // обработчик для сохранения данных о студенте
     @PostMapping("/save")
-    public String saveStudent(@ModelAttribute("student") Student student, RedirectAttributes ra) {
+    public String saveStudent(@ModelAttribute("student") Student student, RedirectAttributes ra,
+                              @RequestParam String action) {
         // 1. сохраняем нового студента в БД
         Student saved = studentService.saveStudent(student);
-        // 2. добавить сообщение о том, что студент добавлен
+        // 2. добавить сообщение о том, что студент сохранен
         ra.addFlashAttribute("message",
-                "Student " + saved + " saved successfully");
+                "Student " + saved + " " + action + "d successfully");
         // 3. выполнить перенаправление
         return "redirect:/students";
     }
 
+    //обработчик на получение формы для обновления студента
     @GetMapping("/update/{id}")
     public String showUpdateStudentForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("action", "update");
@@ -81,7 +85,7 @@ public class StudentController {
         return "student/student-form";
     }
 
-    // обработчик для удаления студент
+    // обработчик для удаления студента
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") Integer id, RedirectAttributes ra) {
         studentService.deleteStudentById(id);
