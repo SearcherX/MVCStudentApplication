@@ -44,10 +44,11 @@ public class StudentController {
     @GetMapping("/details/{id}")
     public String showDetailsCard(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("student", studentService.findById(id));
-        AssessmentFilter filter = new AssessmentFilter(assessmentService.listByStudentId(id));
-        model.addAttribute("assessmentsMap", filter.getAssessmentMap());
-        model.addAttribute("avgMap", filter.getAvgMap());
-        model.addAttribute("avgAll", filter.getAvgAll());
+        AssessmentFilter assessmentFilter = new AssessmentFilter(assessmentService.listByStudentId(id));
+        model.addAttribute("assessmentFilter", assessmentFilter);
+        model.addAttribute("assessmentsMap", assessmentFilter.getAssessmentMap());
+        model.addAttribute("avgMap", assessmentFilter.getAvgMap());
+        model.addAttribute("avgAll", assessmentFilter.getAvgAll());
         return "student/student-info";
     }
 

@@ -23,7 +23,7 @@
                         <span th:text="${student.group == null ? 'NONE' : student.group.groupName}"></span>
                     </li>
                 </ul>
-<!--                таблица оценок-->
+                <!--                таблица оценок-->
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -33,17 +33,18 @@
                     </tr>
                     </thead>
                     <tbody>    <!-- цикл -->
-                    <th:block th:each="assessment: ${assessmentsMap}">
+                    <th:block th:each="assessment: ${assessmentFilter.assessmentMap}">
                         <tr>
                             <td>[[${assessment.key}]]</td>
-                            <td th:text="${T(learning.mvcstudentapplication.controller.filter.AssessmentFilter).listToString(assessment.value)}"></td>
-                            <td>[[${avgMap.get(assessment.key)}]]</td>
+                            <td th:text="${T(learning.mvcstudentapplication.controller.filter.AssessmentFilter)
+                            .listToString(assessment.value)}"></td>
+                            <td>[[${assessmentFilter.avgMap.get(assessment.key)}]]</td>
                         </tr>
                     </th:block>
                     <tr>
                         <td>Total</td>
                         <td></td>
-                        <td>[[${avgAll}]]</td>
+                        <td>[[${assessmentFilter.avgAll}]]</td>
                     </tr>
                     </tbody>
                 </table>
