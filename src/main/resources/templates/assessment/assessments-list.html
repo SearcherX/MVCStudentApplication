@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layouts.html :: common_head(~{::title})">
     <title>Assessments</title>
 </head>
@@ -16,9 +18,10 @@
         <h2>Assessments of [[${student}]]</h2>
         <!-- ссылка на добавление новой оценки -->
         <div class="row mb-2">
-            <div class="col-6 d-flex justify-content-start">
-                <a th:href="@{'/students/assessments/' + ${student.id} + '/new'}" class="btn btn-success">Add
-                    Assessment</a>
+            <div class="col-6 d-flex justify-content-start" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                <a th:href="@{'/students/assessments/' + ${student.id} + '/new'}" class="btn btn-success">
+                    Add Assessment
+                </a>
             </div>
         </div>
         <!-- вывод списка оценок для студента в виде таблицы + bootstrap -->
@@ -29,7 +32,7 @@
                 <th>Assessment</th>
                 <th>Date</th>
                 <th>Subject</th>
-                <th>Action</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMIN')">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -39,7 +42,7 @@
                     <td>[[${assessment.assessmentValue}]]</td>
                     <td>[[${#dates.format(assessment.date, 'dd.MM.yyyy')}]]</td>
                     <td>[[${assessment.subject.subjectName}]]</td>
-                    <td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMIN')">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">

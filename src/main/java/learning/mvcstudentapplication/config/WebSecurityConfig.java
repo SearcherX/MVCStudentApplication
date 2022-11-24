@@ -17,6 +17,10 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/", "/students", "/webjars/**", "/css/**", "/img/**").permitAll()
+                        .antMatchers("/students/new", "/students/update/**", "/students/delete/**",
+                                "/groups/new", "/groups/update/**", "/groups/delete/**",
+                                "/students/assessments/*/new", "/students/assessments/*/update/**",
+                                "/students/assessments/*/delete/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
