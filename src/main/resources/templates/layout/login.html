@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-3">
+            <h1 class="text-center">SIGN IN</h1>
+            <form th:action="@{/login}" method="post">
+                <div>
+                    <label for="inputUser" class="form-label">Username:</label>
+                    <input id="inputUser" type="text" name="username" class="form-control"/>
+                </div>
+                <div>
+                    <label for="inputPassword" class="form-label">Password:</label>
+                    <input id="inputPassword" type="password" name="password" class="form-control"/>
+                </div>
+                <button class="btn-authorize mt-4 fs-5 fw-bold">Log in</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

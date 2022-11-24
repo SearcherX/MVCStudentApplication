@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layouts.html :: common_head(~{::title})">
     <title>Groups</title>
 </head>
@@ -17,7 +19,7 @@
         <div class="row mb-2">
             <!-- ссылка на добавление новой группы -->
             <div class="col-6 d-flex justify-content-start">
-                <a th:href="@{/groups/new}" class="btn btn-success">Add group</a>
+                <a th:href="@{/groups/new}" class="btn btn-success" sec:authorize="hasAnyRole('ROLE_ADMIN')">Add group</a>
             </div>
             <!-- фильтр -->
             <div class="col-6 d-flex justify-content-end">
@@ -35,7 +37,7 @@
             <tr>
                 <th>ID</th>
                 <th>Group Name</th>
-                <th>Action</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMIN')">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -43,7 +45,7 @@
                 <tr>
                     <td>[[${group.id}]]</td>
                     <td>[[${group.groupName}]]</td>
-                    <td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMIN')">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,13 +53,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a th:href="@{'/groups/delete/' + ${group.id}}" class="dropdown-item">
-                                        Delete
+                                    <a th:href="@{'/groups/update/' + ${group.id}}" class="dropdown-item">
+                                        Update
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{'/groups/update/' + ${group.id}}" class="dropdown-item">
-                                        Update
+                                    <a th:href="@{'/groups/delete/' + ${group.id}}" class="dropdown-item">
+                                        Delete
                                     </a>
                                 </li>
                             </ul>
