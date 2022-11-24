@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- фрагмент хеда -->
 <head th:fragment="common_head(title)">
     <meta charset="UTF-8">
@@ -12,26 +14,37 @@
 
 <!-- фрагмент хедера -->
 <header th:fragment="header" class="sticky-top bg-secondary">
-    <div class="container fs-5 fw-bold">
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link text-light" th:href="@{/}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" th:href="@{/students}">Students</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" th:href="@{/groups}">Groups</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" th:href="@{/subjects}">Subjects</a>
-            </li>
-            <li>
-                <form th:action="@{/logout}" method="post">
-                    <button>Log out</button>
-                </form>
-            </li>
-        </ul>
+    <div class="container-fluid fs-5 fw-bold">
+        <div class="row">
+            <div class="col-8">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/students}">Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/groups}">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" th:href="@{/subjects}">Subjects</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4 btn-group-vertical">
+                <ul class="nav justify-content-start h-80">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="btn-authorize nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="btn-authorize nav-link">Log out</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </header>
 <!-- фрагмент футера -->
