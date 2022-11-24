@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Forbidden</title>
+</head>
+<body class="min-vh-100">
+<div class="container-fluid min-vh-100 text-center d-flex flex-column justify-content-center forbidden">
+    <div class="row">
+        <h1>403</h1>
+    </div>
+    <div class="row">
+        <h3>Access not granted</h3>
+    </div>
+    <div class="row">
+        <a th:href="@{/}">Go Home</a>
+    </div>
+</div>
+</body>
+</html>

@@ -22,3 +22,17 @@ body {
 form[action="/login"] .btn-authorize {
     background-color: black;
 }
+
+.forbidden h1 {
+    font-weight: 900;
+    font-size: 5rem;
+}
+
+.forbidden h3 {
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.forbidden a {
+    font-size: 2rem;
+}
