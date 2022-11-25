@@ -19,7 +19,9 @@
         <div class="row mb-2">
             <!-- ссылка на добавление новой группы -->
             <div class="col-6 d-flex justify-content-start">
-                <a th:href="@{/groups/new}" class="btn btn-success" sec:authorize="hasAnyRole('ROLE_ADMIN')">Add group</a>
+                <a th:href="@{/groups/new}" class="btn btn-success" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    Add group
+                </a>
             </div>
             <!-- фильтр -->
             <div class="col-6 d-flex justify-content-end">
@@ -53,12 +55,12 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a th:href="@{'/groups/update/' + ${group.id}}" class="dropdown-item">
+                                    <a th:href="@{|/groups/update/${group.id}|}" class="dropdown-item">
                                         Update
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{'/groups/delete/' + ${group.id}}" class="dropdown-item">
+                                    <a th:href="@{|/groups/delete/${group.id}|}" class="dropdown-item">
                                         Delete
                                     </a>
                                 </li>

@@ -50,13 +50,13 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a th:href="@{'/students/assessments/' + ${student.id} + '/update/' + ${assessment.id}}"
+                                    <a th:href="@{|/students/assessments/${student.id}/update/${assessment.id}|}"
                                        class="dropdown-item">
                                         Update
                                     </a>
                                 </li>
                                 <li>
-                                    <a th:href="@{'/students/assessments/' + ${student.id} + '/delete/' + ${assessment.id}}"
+                                    <a th:href="@{|/students/assessments/${student.id}/delete/${assessment.id}|}"
                                        class="dropdown-item">
                                         Delete
                                     </a>
