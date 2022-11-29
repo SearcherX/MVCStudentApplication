@@ -1,15 +1,16 @@
 package learning.mvcstudentapplication.service.security;
 
-import learning.mvcstudentapplication.db.entity.User;
+import learning.mvcstudentapplication.db.entity.security.Authority;
+import learning.mvcstudentapplication.db.entity.security.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Stream;
 
 public class DbUserDetails implements UserDetails {
-    private User dbUser;
+    private final User dbUser;
 
     public DbUserDetails(User dbUser) {
         this.dbUser = dbUser;
@@ -17,9 +18,12 @@ public class DbUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.<GrantedAuthority>singletonList(
-                new SimpleGrantedAuthority("ROLE_USER")
-        );
+        //набор прав в строку
+        Stream<String> stream = dbUser.getRole().getAuthorities().stream().map(Authority::getAuthorityName);
+        //добавить в стрим роль и преобразовать все элементы в SimpleGrantedAuthority
+        //вернуть в виде списка
+        return Stream.concat(stream, Stream.of(dbUser.getRole().getRoleName()))
+                .map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override

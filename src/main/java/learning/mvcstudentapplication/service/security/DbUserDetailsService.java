@@ -1,7 +1,7 @@
 package learning.mvcstudentapplication.service.security;
 
-import learning.mvcstudentapplication.db.entity.User;
-import learning.mvcstudentapplication.db.repository.UserRepository;
+import learning.mvcstudentapplication.db.entity.security.User;
+import learning.mvcstudentapplication.db.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +22,7 @@ public class DbUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
 
         // 2. вернуть объект UserDetails
-        return user;
+        return new DbUserDetails(user);
     }
+
 }

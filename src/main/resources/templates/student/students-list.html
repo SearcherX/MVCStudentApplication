@@ -19,7 +19,10 @@
         <div class="row mb-2">
             <!-- ссылка на добавление нового студента -->
             <div class="col-6 d-flex justify-content-start">
-                <a th:href="@{/students/new}" class="btn btn-success" sec:authorize="hasAuthority('ADMIN')"> Add student </a>
+                <a th:href="@{/students/new}" class="btn btn-success"
+                   sec:authorize="hasAuthority('CREATE_STUDENT')">
+                    Add student
+                </a>
             </div>
             <!-- фильтр -->
             <div class="col-6 d-flex justify-content-end">
@@ -39,7 +42,10 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Group</th>
-                <th sec:authorize="hasAuthority('USER')">Action</th>
+                <th sec:authorize="hasAnyAuthority('READ_STUDENT', 'READ_ASSESSMENT',
+                'UPDATE_STUDENT', 'DELETE_STUDENT')">
+                    Action
+                </th>
             </tr>
             </thead>  <!-- тело таблицы -->
             <tbody>    <!-- цикл -->
@@ -49,29 +55,30 @@
                     <td>[[${student.firstName}]]</td>
                     <td>[[${student.lastName}]]</td>
                     <td th:text="${student.group == null ? 'NONE' : student.group.groupName}"/>
-                    <td sec:authorize="hasAuthority('USER')">
+                    <td sec:authorize="hasAnyAuthority('READ_STUDENT', 'READ_ASSESSMENT',
+                    'UPDATE_STUDENT', 'DELETE_STUDENT')">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 Select
                             </button>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li sec:authorize="hasAuthority('READ_STUDENT')">
                                     <a th:href="@{|/students/details/${student.id}|}" class="dropdown-item">
                                         Details
                                     </a>
                                 </li>
-                                <li>
+                                <li sec:authorize="hasAuthority('READ_ASSESSMENT')">
                                     <a th:href="@{|/students/assessments/${student.id}|}" class="dropdown-item">
                                         Assessments
                                     </a>
                                 </li>
-                                <li sec:authorize="hasAuthority('ADMIN')">
+                                <li sec:authorize="hasAuthority('UPDATE_STUDENT')">
                                     <a th:href="@{|/students/update/${student.id}|}" class="dropdown-item">
                                         Update
                                     </a>
                                 </li>
-                                <li sec:authorize="hasAuthority('ADMIN')">
+                                <li sec:authorize="hasAuthority('DELETE_STUDENT')">
                                     <a th:href="@{|/students/delete/${student.id}|}" class="dropdown-item">
                                         Delete
                                     </a>

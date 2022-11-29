@@ -3,7 +3,7 @@ package learning.mvcstudentapplication.controller.student;
 import learning.mvcstudentapplication.controller.filter.AssessmentFilter;
 import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Student;
-import learning.mvcstudentapplication.db.entity.User;
+import learning.mvcstudentapplication.db.entity.security.User;
 import learning.mvcstudentapplication.service.AssessmentService;
 import learning.mvcstudentapplication.service.GroupService;
 import learning.mvcstudentapplication.service.StudentService;
@@ -29,8 +29,7 @@ public class StudentController {
 
     //обработчик на получение списка студентов, учитывая фильтр
     @GetMapping("")
-    public String showStudentsList(@AuthenticationPrincipal User user,
-                                   @RequestParam(required = false, defaultValue = "") String containsFilter, Model model) {
+    public String showStudentsList(@RequestParam(required = false, defaultValue = "") String containsFilter, Model model) {
         List<Student> studentsList;
 
         if (containsFilter != null && !containsFilter.isEmpty())
@@ -83,7 +82,6 @@ public class StudentController {
     public String showUpdateStudentForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("action", "update");
         model.addAttribute("student", studentService.findById(id));
-        System.out.println(studentService.findById(id));
         List<Group> groups = groupService.listAllGroups();  // список всех групп
         model.addAttribute("groupsList", groups);
         return "student/student-form";

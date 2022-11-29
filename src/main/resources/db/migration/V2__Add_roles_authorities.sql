@@ -1,0 +1,75 @@
+USE students_db;
+
+INSERT INTO role_t (role_name)
+VALUES ('ROLE_USER'),
+       ('ROLE_TEACHER'),
+       ('ROLE_ADMIN');
+
+INSERT INTO authority_t (authority_name)
+VALUES ('READ_STUDENT'),
+       ('CREATE_STUDENT'),
+       ('UPDATE_STUDENT'),
+       ('DELETE_STUDENT'),
+       ('READ_ASSESSMENT'),
+       ('CREATE_ASSESSMENT'),
+       ('UPDATE_ASSESSMENT'),
+       ('DELETE_ASSESSMENT'),
+       ('READ_GROUP'),
+       ('CREATE_GROUP'),
+       ('UPDATE_GROUP'),
+       ('DELETE_GROUP'),
+       ('READ_SUBJECT');
+
+INSERT INTO role_authority (role_id, authority_id)
+#Наделить правами ROLE_USER
+VALUES ((SELECT id FROM role_t WHERE role_name = 'ROLE_USER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_STUDENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_USER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_USER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_GROUP')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_USER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_SUBJECT')),
+#Наделить правами ROLE_TEACHER
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_STUDENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'CREATE_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'UPDATE_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'DELETE_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_GROUP')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_TEACHER'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_SUBJECT')),
+#Наделить правами ROLE_ADMIN
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_STUDENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'CREATE_STUDENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'UPDATE_STUDENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'DELETE_STUDENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'CREATE_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'UPDATE_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'DELETE_ASSESSMENT')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_GROUP')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'CREATE_GROUP')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'UPDATE_GROUP')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'DELETE_GROUP')),
+       ((SELECT id FROM role_t WHERE role_name = 'ROLE_ADMIN'),
+        (SELECT id FROM authority_t WHERE authority_name = 'READ_SUBJECT'));
+

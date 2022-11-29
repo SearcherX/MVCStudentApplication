@@ -10,11 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest()
 
 class UserServiceTest {
-    @Autowired
-    UserService userService;
 
     @Test
     void addUser() {
-        userService.setAdmin("admin");
     }
 }

@@ -18,7 +18,7 @@
         <h2>Assessments of [[${student}]]</h2>
         <!-- ссылка на добавление новой оценки -->
         <div class="row mb-2">
-            <div class="col-6 d-flex justify-content-start" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+            <div class="col-6 d-flex justify-content-start" sec:authorize="hasAuthority('CREATE_ASSESSMENT')">
                 <a th:href="@{'/students/assessments/' + ${student.id} + '/new'}" class="btn btn-success">
                     Add Assessment
                 </a>
@@ -32,7 +32,7 @@
                 <th>Assessment</th>
                 <th>Date</th>
                 <th>Subject</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMIN')">Action</th>
+                <th sec:authorize="hasAnyAuthority('UPDATE_ASSESSMENT', 'DELETE_ASSESSMENT')">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -42,20 +42,20 @@
                     <td>[[${assessment.assessmentValue}]]</td>
                     <td>[[${#dates.format(assessment.date, 'dd.MM.yyyy')}]]</td>
                     <td>[[${assessment.subject.subjectName}]]</td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    <td sec:authorize="hasAnyAuthority('UPDATE_ASSESSMENT', 'DELETE_ASSESSMENT')">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 Select
                             </button>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li sec:authorize="hasAuthority('UPDATE_ASSESSMENT')">
                                     <a th:href="@{|/students/assessments/${student.id}/update/${assessment.id}|}"
                                        class="dropdown-item">
                                         Update
                                     </a>
                                 </li>
-                                <li>
+                                <li sec:authorize="hasAuthority('DELETE_ASSESSMENT')">
                                     <a th:href="@{|/students/assessments/${student.id}/delete/${assessment.id}|}"
                                        class="dropdown-item">
                                         Delete
