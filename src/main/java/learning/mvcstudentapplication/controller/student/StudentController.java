@@ -3,10 +3,12 @@ package learning.mvcstudentapplication.controller.student;
 import learning.mvcstudentapplication.controller.filter.AssessmentFilter;
 import learning.mvcstudentapplication.db.entity.Group;
 import learning.mvcstudentapplication.db.entity.Student;
+import learning.mvcstudentapplication.db.entity.User;
 import learning.mvcstudentapplication.service.AssessmentService;
 import learning.mvcstudentapplication.service.GroupService;
 import learning.mvcstudentapplication.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,8 @@ public class StudentController {
 
     //обработчик на получение списка студентов, учитывая фильтр
     @GetMapping("")
-    public String showStudentsList(@RequestParam(required = false, defaultValue = "") String containsFilter, Model model) {
+    public String showStudentsList(@AuthenticationPrincipal User user,
+                                   @RequestParam(required = false, defaultValue = "") String containsFilter, Model model) {
         List<Student> studentsList;
 
         if (containsFilter != null && !containsFilter.isEmpty())

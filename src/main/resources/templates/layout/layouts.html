@@ -24,10 +24,10 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" th:href="@{/students}">Students</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER')">
                         <a class="nav-link text-light" th:href="@{/groups}">Groups</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('USER')">
                         <a class="nav-link text-light" th:href="@{/subjects}">Subjects</a>
                     </li>
                 </ul>

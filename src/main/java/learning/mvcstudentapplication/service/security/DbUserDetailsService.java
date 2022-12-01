@@ -22,6 +22,6 @@ public class DbUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
 
         // 2. вернуть объект UserDetails
-        return new DbUserDetails(user);
+        return user;
     }
 }

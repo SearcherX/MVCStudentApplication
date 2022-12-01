@@ -15,8 +15,6 @@ class UserServiceTest {
 
     @Test
     void addUser() {
-        userService.addUser("test2", "123");
-        userService.addUser("test3", "1234");
-        userService.addUser("test4", "12345");
+        userService.setAdmin("admin");
     }
 }

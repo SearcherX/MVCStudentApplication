@@ -19,7 +19,7 @@
         <div class="row mb-2">
             <!-- ссылка на добавление нового студента -->
             <div class="col-6 d-flex justify-content-start">
-                <a th:href="@{/students/new}" class="btn btn-success" sec:authorize="hasAnyRole('ROLE_ADMIN')"> Add student </a>
+                <a th:href="@{/students/new}" class="btn btn-success" sec:authorize="hasAuthority('ADMIN')"> Add student </a>
             </div>
             <!-- фильтр -->
             <div class="col-6 d-flex justify-content-end">
@@ -39,7 +39,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Group</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">Action</th>
+                <th sec:authorize="hasAuthority('USER')">Action</th>
             </tr>
             </thead>  <!-- тело таблицы -->
             <tbody>    <!-- цикл -->
@@ -49,7 +49,7 @@
                     <td>[[${student.firstName}]]</td>
                     <td>[[${student.lastName}]]</td>
                     <td th:text="${student.group == null ? 'NONE' : student.group.groupName}"/>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <td sec:authorize="hasAuthority('USER')">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,12 +66,12 @@
                                         Assessments
                                     </a>
                                 </li>
-                                <li sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                                <li sec:authorize="hasAuthority('ADMIN')">
                                     <a th:href="@{|/students/update/${student.id}|}" class="dropdown-item">
                                         Update
                                     </a>
                                 </li>
-                                <li sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                                <li sec:authorize="hasAuthority('ADMIN')">
                                     <a th:href="@{|/students/delete/${student.id}|}" class="dropdown-item">
                                         Delete
                                     </a>

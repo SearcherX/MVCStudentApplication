@@ -1,8 +1,10 @@
 package learning.mvcstudentapplication.controller;
 
 import learning.mvcstudentapplication.db.entity.Group;
+import learning.mvcstudentapplication.db.entity.User;
 import learning.mvcstudentapplication.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
