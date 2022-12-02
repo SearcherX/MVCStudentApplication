@@ -1,6 +1,5 @@
 package learning.mvcstudentapplication.service.security;
 
-import learning.mvcstudentapplication.db.entity.Student;
 import learning.mvcstudentapplication.db.entity.security.User;
 import learning.mvcstudentapplication.db.repository.security.RoleRepository;
 import learning.mvcstudentapplication.db.repository.security.UserRepository;

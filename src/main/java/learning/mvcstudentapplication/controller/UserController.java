@@ -1,7 +1,5 @@
 package learning.mvcstudentapplication.controller;
 
-import learning.mvcstudentapplication.db.entity.Group;
-import learning.mvcstudentapplication.db.entity.Student;
 import learning.mvcstudentapplication.db.entity.security.Role;
 import learning.mvcstudentapplication.db.entity.security.User;
 import learning.mvcstudentapplication.service.security.RoleService;

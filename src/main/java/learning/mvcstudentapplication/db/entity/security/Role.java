@@ -1,8 +1,7 @@
 package learning.mvcstudentapplication.db.entity.security;
 
-import java.util.Set;
-
 import javax.persistence.*;
+import java.util.Set;
 @Entity
 @Table(name = "role_t")
 public class Role {

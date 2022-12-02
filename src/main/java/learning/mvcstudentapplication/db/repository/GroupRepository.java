@@ -1,7 +1,6 @@
 package learning.mvcstudentapplication.db.repository;
 
 import learning.mvcstudentapplication.db.entity.Group;
-import learning.mvcstudentapplication.db.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
