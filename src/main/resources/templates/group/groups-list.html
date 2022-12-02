@@ -19,7 +19,7 @@
         <div class="row mb-2">
             <!-- ссылка на добавление новой группы -->
             <div class="col-6 d-flex justify-content-start">
-                <a th:href="@{/groups/new}" class="btn btn-success" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                <a th:href="@{/groups/new}" class="btn btn-success" sec:authorize="hasAuthority('CREATE_GROUP')">
                     Add group
                 </a>
             </div>
@@ -39,7 +39,7 @@
             <tr>
                 <th>ID</th>
                 <th>Group Name</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMIN')">Action</th>
+                <th sec:authorize="hasAnyAuthority('UPDATE_GROUP', 'DELETE_GROUP')">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -47,19 +47,19 @@
                 <tr>
                     <td>[[${group.id}]]</td>
                     <td>[[${group.groupName}]]</td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    <td sec:authorize="hasAnyAuthority('UPDATE_GROUP', 'DELETE_GROUP')">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 Select
                             </button>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li sec:authorize="hasAuthority('UPDATE_GROUP')">
                                     <a th:href="@{|/groups/update/${group.id}|}" class="dropdown-item">
                                         Update
                                     </a>
                                 </li>
-                                <li>
+                                <li sec:authorize="hasAuthority('DELETE_GROUP')">
                                     <a th:href="@{|/groups/delete/${group.id}|}" class="dropdown-item">
                                         Delete
                                     </a>

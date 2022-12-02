@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Registration</title>
+</head>
+<body>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-3 bg-light">
+            <div th:if="${message != null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+            <h1 class="text-center">Registration</h1>
+            <form th:action="@{/registration}" method="post">
+                <div>
+                    <label for="inputUser" class="form-label">Username:</label>
+                    <input id="inputUser" type="text" name="username" class="form-control"/>
+                </div>
+                <div>
+                    <label for="inputPassword" class="form-label">Password:</label>
+                    <input id="inputPassword" type="password" name="password" class="form-control"/>
+                </div>
+                <div class="w-100 d-flex flex-row">
+                    <div class="col-6">
+                        <button class="btn-authorize fs-5 fw-bold">SIGN UP</button>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <a th:href="@{/}" class="btn-authorize fs-5 fw-bold">
+                            Home
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

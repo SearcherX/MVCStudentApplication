@@ -80,7 +80,6 @@ public class StudentController {
     public String showUpdateStudentForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("action", "update");
         model.addAttribute("student", studentService.findById(id));
-        System.out.println(studentService.findById(id));
         List<Group> groups = groupService.listAllGroups();  // список всех групп
         model.addAttribute("groupsList", groups);
         return "student/student-form";

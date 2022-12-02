@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+    <title>Users</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+    <div class="container text-center">
+        <!-- сообщение -->
+        <div th:if="${message != null}" class="alert alert-success">
+            [[${message}]]
+        </div>
+        <h2>Users</h2>
+        <!-- вывод списка юзеров в виде таблицы + bootstrap -->
+        <table class="table table-bordered bg-light">  <!-- шапка таблицы -->
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+            </thead>  <!-- тело таблицы -->
+            <tbody>    <!-- цикл -->
+            <th:block th:each="user: ${usersList}">
+                <tr>
+                    <td>[[${user.id}]]</td>
+                    <td>[[${user.username}]]</td>
+                    <td>[[${user.role.roleName}]]</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Select
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a th:href="@{|/users/update/${user.id}|}" class="dropdown-item">
+                                        Update
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{|/users/delete/${user.id}|}" class="dropdown-item">
+                                        Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

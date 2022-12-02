@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layouts.html :: common_head(~{::title})">
+  <title>User form</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="layout/layouts.html :: header"></header>
+
+<main class="mb-auto">
+  <div class="container-fluid text-center">
+    <h1 th:text="${action == 'create' ? 'Add new user' : 'Manage user'}"></h1>
+    <!-- форма добавления юзера -->
+    <div class="row justify-content-center">
+      <div class="col-2 bg-light">
+        <form method="post" th:action="@{/users/save}"
+              th:object="${user}" class="row g-3">
+          <input type="hidden" th:field="*{id}"/>
+          <input type="hidden" th:field="*{username}"/>
+          <input type="hidden" th:field="*{password}"/>
+          <div class="col-12">
+            <label for="inputGroup" class="form-label">Role:</label>
+            <select id="inputGroup" class="form-select" th:field="*{role}">
+              <th:block th:each="choseRole: ${rolesList}">
+                <option th:value="${choseRole.id}">
+                  [[${choseRole.roleName}]]
+                </option>
+              </th:block>
+            </select>
+          </div>
+          <input type="hidden" name="action" th:value="${action}">
+          <div class="col-12">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a th:href="@{/user/list}" class="btn btn-danger">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="layout/layouts.html :: footer"></footer>
+
+</body>
+</html>

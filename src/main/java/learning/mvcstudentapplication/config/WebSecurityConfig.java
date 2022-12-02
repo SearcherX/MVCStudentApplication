@@ -1,26 +1,47 @@
 package learning.mvcstudentapplication.config;
 
+import learning.mvcstudentapplication.service.security.DbUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+    @Autowired
+    private DbUserDetailsService dbUserDetailsService;
+
+    // зависимость кодировщика паролей
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder(8);
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(encoder());
+        provider.setUserDetailsService(dbUserDetailsService);
+        return provider;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/", "/students", "/webjars/**", "/css/**", "/img/**").permitAll()
                         .antMatchers("/students/new", "/students/update/**", "/students/delete/**",
-                                "/groups/new", "/groups/update/**", "/groups/delete/**",
-                                "/students/assessments/*/new", "/students/assessments/*/update/**",
-                                "/students/assessments/*/delete/**").hasRole("ADMIN")
+                                "/groups/new", "/groups/update/**", "/groups/delete/**").hasRole("ADMIN")
+                        .antMatchers("/students/assessments/*/new", "/students/assessments/*/update/**",
+                                "/students/assessments/*/delete/**").hasAnyRole("ADMIN", "TEACHER")
+                        .antMatchers("/", "/students", "/registration", "/webjars/**", "/css/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -28,26 +49,9 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-                .logout().logoutSuccessUrl("/");
+                .logout().logoutSuccessUrl("/").and().csrf().disable();
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails root =
-                User.withDefaultPasswordEncoder()
-                        .username("root")
-                        .password("root")
-                        .roles("ADMIN")
-                        .build();
-
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("user")
-                        .roles("USER")
-                        .build();
-        return new InMemoryUserDetailsManager(root, user);
-    }
 
 }
