@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:replace="layout/layouts.html :: common_head(~{::title})">
     <title>Users</title>
@@ -32,7 +33,7 @@
                     <td>[[${user.id}]]</td>
                     <td>[[${user.username}]]</td>
                     <td>[[${user.role.roleName}]]</td>
-                    <td>
+                    <td th:if="${user.username != #authentication.getPrincipal().getUsername()}">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
