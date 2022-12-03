@@ -16,21 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
-    @Autowired
-    private DbUserDetailsService dbUserDetailsService;
-
     // зависимость кодировщика паролей
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(8);
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(encoder());
-        provider.setUserDetailsService(dbUserDetailsService);
-        return provider;
     }
 
     @Bean
